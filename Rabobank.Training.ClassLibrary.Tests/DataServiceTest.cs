@@ -15,7 +15,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
             dataservice = new DataService();
         }
         [TestMethod]
-        public void ShouldReturnFundsOfMandatesData()
+        public void ShouldReturnFundsOfMandatesDataWhenXMLHasData()
         {
             //Arrange
             string path = @"..\..\..\TestData\FundsOfMandatesData.xml";
@@ -55,7 +55,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
         }
 
         [TestMethod]
-        public void ShouldNotReturnMandate()
+        public void ShouldNotReturnMandate_WhenInstrumentCodeDoesNotMatch()
         {
             //Arrange
             string path = @"..\..\..\TestData\FundsOfMandatesData.xml";
@@ -71,7 +71,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
         }
 
         [TestMethod]
-        public void ShouldReturnMandate()
+        public void ShouldReturnMandate_WhenInstrumentCodeMatches()
         {
             //Arrange
             string path = @"..\..\..\TestData\FundsOfMandatesData.xml";
@@ -87,7 +87,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
         }
 
         [TestMethod]
-        public void ShouldMatchMandateValue()
+        public void ShouldMatchMandateValue_WhenInstrumentCodeMatches()
         {
             //Arrange
             string path = @"..\..\..\TestData\FundsOfMandatesData.xml";
@@ -113,7 +113,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
         }
 
         [TestMethod]
-        public void ShouldNotAddMandateForEmptyFundsOfMandateData()
+        public void ShouldNotAddMandateForEmptyFundsOfMandateData_WhenFundsOfMandateIsEmpty()
         {
             //Arrange
             PortfolioVM portfolioVM = new PortfolioVM();
@@ -135,7 +135,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
         }
 
         [TestMethod]
-        public void ShouldAddMandate()
+        public void ShouldAddMandate_WhenInstrumentCodeMatches()
         {
             //Arrange
             PortfolioVM portfolioVM = new PortfolioVM();
@@ -143,6 +143,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
             string path = @"..\..\..\TestData\FundsOfMandatesData.xml";
             FundsOfMandatesData fundsOfMandatesData = dataservice.GetFundOfMandates(path);
             int expectedMandateCount = 4;
+
             //Act
             portfolioVM = dataservice.FillMandate(portfolioVM, fundsOfMandatesData);
 

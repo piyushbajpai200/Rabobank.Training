@@ -21,7 +21,7 @@
       <td></td>
       <td>{{ position.value | currency:'EUR' : 'symbol' : '1.0-0'}}</td>
     </tr>
-    <tr *ngFor="let mandate of position.mandates" class="padding-left:20px">
+    <tr *ngFor="let mandate of position.mandates" >
       <td></td>
       <td> {{mandate.name}}</td>
       <td> {{mandate.allocation | percent:'1.1-1'}} </td>
