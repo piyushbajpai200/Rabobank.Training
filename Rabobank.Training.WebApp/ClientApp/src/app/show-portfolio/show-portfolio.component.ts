@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { PortfolioVM } from '../shared/models/PortfolioVM';
+import { ShowPortfolioService } from '../services/show-portfolio.service';
 
 @Component({
   selector: 'app-show-portfolio',
@@ -7,27 +9,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ShowPortfolioComponent {
   public portfolioVM: PortfolioVM;
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<PortfolioVM>(baseUrl + 'api/Portfolio').subscribe(result => {
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private showPortfolioService: ShowPortfolioService) {
+    showPortfolioService.getPortfolio().subscribe(result => {
       this.portfolioVM = result;
       console.log(this.portfolioVM);
     }, error => console.error(error));
   }
-}
-
-interface MandateVM {
-  value: string;
-  name: string;
-  allocation: number;
-}
-
-interface PositionVM {
-  code: string;
-  name: string;
-  value: number;
-  mandates: MandateVM[];
-}
-
-interface PortfolioVM {
-  positions: PositionVM[];
 }

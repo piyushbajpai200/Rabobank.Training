@@ -10,16 +10,22 @@ namespace Rabobank.Training.ClassLibrary.Tests
     public class DataServiceTest
     {
         private IDataService dataservice;
+        private string path;
+
         public DataServiceTest()
         {
             dataservice = new DataService();
         }
-        [TestMethod]
-        public void ShouldReturnFundsOfMandatesDataWhenXMLHasData()
-        {
-            //Arrange
-            string path = @"..\..\..\TestData\FundsOfMandatesData.xml";
 
+        [TestInitialize]
+        public void SetPath()
+        {
+            path = @"..\..\..\TestData\FundsOfMandatesData.xml";
+        }
+
+        [TestMethod]
+        public void GetFundOfMandates_ShouldReturnFundsOfMandatesDataWhenXMLHasData()
+        {
             //Act
             FundsOfMandatesData fundsOfMandatesData = dataservice.GetFundOfMandates(path);
 
@@ -28,11 +34,8 @@ namespace Rabobank.Training.ClassLibrary.Tests
         }
 
         [TestMethod]
-        public void ShouldReturnPositionVM()
+        public void GetPortfolio_ShouldReturnPositionVM()
         {
-            //Arrange
-            string path = @"..\..\..\TestData\FundsOfMandatesData.xml";
-
             //Act
             PortfolioVM PortfolioVM = dataservice.GetPortfolio(path);
 
@@ -41,12 +44,11 @@ namespace Rabobank.Training.ClassLibrary.Tests
         }
 
         [TestMethod]
-        public void ShouldMatchPositionCount()
+        public void GetPortfolio_ShouldMatchPositionCount()
         {
             //Arrange
             int positionsCount = 5;
-            string path = @"..\..\..\TestData\FundsOfMandatesData.xml";
-
+           
             //Act
             PortfolioVM actualPortfolio = dataservice.GetPortfolio(path);
 
@@ -55,14 +57,14 @@ namespace Rabobank.Training.ClassLibrary.Tests
         }
 
         [TestMethod]
-        public void ShouldNotReturnMandate_WhenInstrumentCodeDoesNotMatch()
+        public void CalculateMandate_ShouldNotReturnMandate_WhenInstrumentCodeDoesNotMatch()
         {
             //Arrange
-            string path = @"..\..\..\TestData\FundsOfMandatesData.xml";
             FundsOfMandatesData fundsOfMandatesData = dataservice.GetFundOfMandates(path);
             string positioncode = "NL0000009165";
             decimal positionValue = 12345;
             int expectedCount = 0;
+
             //Act
             List<MandateVM> result = dataservice.CalculateMandate(positioncode, positionValue, fundsOfMandatesData);
 
@@ -71,14 +73,14 @@ namespace Rabobank.Training.ClassLibrary.Tests
         }
 
         [TestMethod]
-        public void ShouldReturnMandate_WhenInstrumentCodeMatches()
+        public void CalculateMandate_ShouldReturnMandate_WhenInstrumentCodeMatches()
         {
             //Arrange
-            string path = @"..\..\..\TestData\FundsOfMandatesData.xml";
             FundsOfMandatesData fundsOfMandatesData = dataservice.GetFundOfMandates(path);
             string positioncode = "NL0000287100";
             decimal positionValue = 23456;
             int expectedCount = 4;
+
             //Act
             List<MandateVM> result = dataservice.CalculateMandate(positioncode, positionValue, fundsOfMandatesData);
 
@@ -87,10 +89,9 @@ namespace Rabobank.Training.ClassLibrary.Tests
         }
 
         [TestMethod]
-        public void ShouldMatchMandateValue_WhenInstrumentCodeMatches()
+        public void CalculateMandate_ShouldMatchMandateValue_WhenInstrumentCodeMatches()
         {
             //Arrange
-            string path = @"..\..\..\TestData\FundsOfMandatesData.xml";
             FundsOfMandatesData fundsOfMandatesData = dataservice.GetFundOfMandates(path);
             string positioncode = "NL0000287100";
             decimal positionValue = 23456;
@@ -113,7 +114,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
         }
 
         [TestMethod]
-        public void ShouldNotAddMandateForEmptyFundsOfMandateData_WhenFundsOfMandateIsEmpty()
+        public void FillMandate_ShouldNotAddMandateForEmptyFundsOfMandateData_WhenFundsOfMandateIsEmpty()
         {
             //Arrange
             PortfolioVM portfolioVM = new PortfolioVM();
@@ -135,12 +136,11 @@ namespace Rabobank.Training.ClassLibrary.Tests
         }
 
         [TestMethod]
-        public void ShouldAddMandate_WhenInstrumentCodeMatches()
+        public void FillMandate_ShouldAddMandate_WhenInstrumentCodeMatches()
         {
             //Arrange
             PortfolioVM portfolioVM = new PortfolioVM();
             portfolioVM.Positions.Add(new PositionVM() { Code = "NL0000287100", Name = "Optimix Mix Fund", Value = 23456 });
-            string path = @"..\..\..\TestData\FundsOfMandatesData.xml";
             FundsOfMandatesData fundsOfMandatesData = dataservice.GetFundOfMandates(path);
             int expectedMandateCount = 4;
 

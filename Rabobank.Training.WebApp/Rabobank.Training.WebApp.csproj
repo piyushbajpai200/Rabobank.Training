@@ -24,7 +24,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\services\show-portfolio.service.ts" />
+    <None Remove="ClientApp\src\app\shared\models\MandateVM.ts" />
+    <None Remove="ClientApp\src\app\shared\models\PortfolioVM.ts" />
+    <None Remove="ClientApp\src\app\shared\models\PositionVM.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Rabobank.Training.ClassLibrary\Rabobank.Training.ClassLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\services\show-portfolio.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\PositionVM.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\MandateVM.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\PortfolioVM.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

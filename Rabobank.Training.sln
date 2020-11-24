@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabobank.Training.WebApp", "Rabobank.Training.WebApp\Rabobank.Training.WebApp.csproj", "{569FA463-86AA-4047-B263-5868CE947A40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rabobank.Training.WebApp", "Rabobank.Training.WebApp\Rabobank.Training.WebApp.csproj", "{569FA463-86AA-4047-B263-5868CE947A40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabobank.Training.ClassLibrary.Tests", "Rabobank.Training.ClassLibrary.Tests\Rabobank.Training.ClassLibrary.Tests.csproj", "{296946A6-A490-442E-B18F-90F1C20B1005}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rabobank.Training.ClassLibrary.Tests", "Rabobank.Training.ClassLibrary.Tests\Rabobank.Training.ClassLibrary.Tests.csproj", "{296946A6-A490-442E-B18F-90F1C20B1005}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabobank.Training.ClassLibrary", "Rabobank.Training.ClassLibrary\Rabobank.Training.ClassLibrary.csproj", "{0B049C9F-AD1B-413C-9199-DED6938FE1F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rabobank.Training.ClassLibrary", "Rabobank.Training.ClassLibrary\Rabobank.Training.ClassLibrary.csproj", "{0B049C9F-AD1B-413C-9199-DED6938FE1F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rabobank.Training.WebApp.Tests", "Rabobank.Training.WebApp.Tests\Rabobank.Training.WebApp.Tests.csproj", "{6FE5CEAF-9431-4C62-8066-6870715E42F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{0B049C9F-AD1B-413C-9199-DED6938FE1F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B049C9F-AD1B-413C-9199-DED6938FE1F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B049C9F-AD1B-413C-9199-DED6938FE1F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FE5CEAF-9431-4C62-8066-6870715E42F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FE5CEAF-9431-4C62-8066-6870715E42F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FE5CEAF-9431-4C62-8066-6870715E42F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FE5CEAF-9431-4C62-8066-6870715E42F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
