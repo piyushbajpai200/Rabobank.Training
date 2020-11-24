@@ -36,7 +36,7 @@
         /// <summary>
         /// Gets the portfolio.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>returns portfolio view model</returns>
         [HttpGet]
         public PortfolioVM GetPortfolio()
         {

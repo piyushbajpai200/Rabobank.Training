@@ -12,6 +12,7 @@
         /// The name.
         /// </value>
         public string Name { get; set; }
+
         /// <summary>
         /// Gets or sets the allocation.
         /// </summary>
@@ -19,6 +20,7 @@
         /// The allocation.
         /// </value>
         public decimal Allocation { get; set; }
+
         /// <summary>
         /// Gets or sets the value.
         /// </summary>

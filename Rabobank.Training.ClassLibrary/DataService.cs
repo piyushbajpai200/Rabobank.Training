@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Xml.Serialization;
+
     /// <summary>
     /// This class used to access data.
     /// </summary>
@@ -15,8 +16,9 @@
         /// </summary>
         /// <param name="path">XML file path</param>
         /// <returns>
-        /// FundsOfMandatesData
+        /// Funds of Mandates data
         /// </returns>
+        
         public FundsOfMandatesData GetFundOfMandates(string path)
         {
             XmlSerializer reader = new XmlSerializer(typeof(FundsOfMandatesData));
@@ -26,10 +28,10 @@
 
         /// <summary>
         /// This Method accepts xml file path and returns PortfolioVM.
-        /// PortfolioVM contains static positionVM, calls fillMandate method which fills mandate object inside postionVM.
+        /// Portfolio view model contains static position view model, calls fillMandate method which fills mandate object inside postion view model.
         /// </summary>
         /// <param name="path">XML file path</param>
-        /// <returns></returns>
+        /// <returns> returns portfolioVM</returns>
         public PortfolioVM GetPortfolio(string path)
         {
             FundsOfMandatesData fundsOfMandatesData = this.GetFundOfMandates(path);
@@ -39,7 +41,7 @@
             portfolioVM.Positions.Add(new PositionVM() { Code = "LU0035601805", Name = "DP Global Strategy L High", Value = 34567 });
             portfolioVM.Positions.Add(new PositionVM() { Code = "NL0000292332", Name = "Rabobank Core Aandelen Fonds T2", Value = 45678 });
             portfolioVM.Positions.Add(new PositionVM() { Code = "LU0042381250", Name = "Morgan Stanley Invest US Gr Fnd", Value = 56789 });
-            return FillMandate(portfolioVM, fundsOfMandatesData);
+            return this.FillMandate(portfolioVM, fundsOfMandatesData);
         }
 
         /// <summary>
@@ -49,7 +51,7 @@
         /// <param name="positionCode">The position code.</param>
         /// <param name="positionValue">The position value.</param>
         /// <param name="fundsOfMandatesData">List of fundsofmandate</param>
-        /// <returns></returns>
+        /// <returns>returns list of mandateVM</returns>
         public List<MandateVM> CalculateMandate(string positionCode, decimal positionValue, FundsOfMandatesData fundsOfMandatesData)
         {
             List<MandateVM> mandates = new List<MandateVM>();
@@ -81,7 +83,7 @@
         /// </summary>
         /// <param name="portfolioVM">The portfolio vm.</param>
         /// <param name="fundsOfMandatesData">The funds of mandates data.</param>
-        /// <returns></returns>
+        /// <returns>returns portfolioVM</returns>
         public PortfolioVM FillMandate(PortfolioVM portfolioVM, FundsOfMandatesData fundsOfMandatesData)
         {
             if (fundsOfMandatesData?.FundsOfMandates?.Length > 0 && portfolioVM?.Positions?.Count > 0)

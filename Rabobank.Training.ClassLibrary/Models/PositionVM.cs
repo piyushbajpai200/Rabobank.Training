@@ -1,6 +1,7 @@
 ﻿namespace Rabobank.Training.ClassLibrary
 {
     using System.Collections.Generic;
+
     /// <summary>
     /// This Model holds PostionVM
     /// </summary>
@@ -13,6 +14,7 @@
         /// The code.
         /// </value>
         public string Code { get; set; }
+
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
@@ -20,6 +22,7 @@
         /// The name.
         /// </value>
         public string Name { get; set; }
+
         /// <summary>
         /// Gets or sets the value.
         /// </summary>
@@ -27,6 +30,7 @@
         /// The value.
         /// </value>
         public decimal Value { get; set; }
+
         /// <summary>
         /// Gets or sets the mandates.
         /// </summary>
@@ -34,6 +38,7 @@
         /// The mandates.
         /// </value>
         public List<MandateVM> Mandates { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PositionVM"/> class.
         /// </summary>
