@@ -4,13 +4,19 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Xml.Serialization;
+    /// <summary>
+    /// This class used to access data.
+    /// </summary>
+    /// <seealso cref="Rabobank.Training.ClassLibrary.IDataService" />
     public class DataService : IDataService
     {
         /// <summary>
         /// This Method accepts xml file path and serialize data into  FundsOfMandatesData
         /// </summary>
         /// <param name="path">XML file path</param>
-        /// <returns>FundsOfMandatesData</returns>
+        /// <returns>
+        /// FundsOfMandatesData
+        /// </returns>
         public FundsOfMandatesData GetFundOfMandates(string path)
         {
             XmlSerializer reader = new XmlSerializer(typeof(FundsOfMandatesData));
@@ -40,9 +46,9 @@
         /// Calculates Mandates of perticular postion, considering position code should match with instrument code of fundsofmandate data
         /// if position code doesn't match with any of instrument code then do nothing.
         /// </summary>
-        /// <param name="positionCode"></param>
-        /// <param name="positionValue"></param>
-        /// <param name="fundsOfMandatesData"> List of fundsofmandate</param>
+        /// <param name="positionCode">The position code.</param>
+        /// <param name="positionValue">The position value.</param>
+        /// <param name="fundsOfMandatesData">List of fundsofmandate</param>
         /// <returns></returns>
         public List<MandateVM> CalculateMandate(string positionCode, decimal positionValue, FundsOfMandatesData fundsOfMandatesData)
         {
@@ -70,11 +76,11 @@
         }
 
         /// <summary>
-        ///  This function calls calculateMandate and updates mandates object for each postion item.
-        ///  if fundsofMandateData or portfolioVM is null or empty then it is not doing anything, returning same portfoliovm object which was passed as argument.
+        /// This function calls calculateMandate and updates mandates object for each postion item.
+        /// if fundsofMandateData or portfolioVM is null or empty then it is not doing anything, returning same portfoliovm object which was passed as argument.
         /// </summary>
-        /// <param name="portfolioVM"></param>
-        /// <param name="fundsOfMandatesData"></param>
+        /// <param name="portfolioVM">The portfolio vm.</param>
+        /// <param name="fundsOfMandatesData">The funds of mandates data.</param>
         /// <returns></returns>
         public PortfolioVM FillMandate(PortfolioVM portfolioVM, FundsOfMandatesData fundsOfMandatesData)
         {

@@ -4,12 +4,29 @@
     using Microsoft.Extensions.Configuration;
     using Rabobank.Training.ClassLibrary;
 
+    /// <summary>
+    /// Portfolio api controller 
+    /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
     [Route("api/[controller]")]
     [ApiController]
     public class PortfolioController : ControllerBase
     {
+        /// <summary>
+        /// The data service
+        /// </summary>
         private IDataService DataService;
+
+        /// <summary>
+        /// The configuration
+        /// </summary>
         private IConfiguration Configuration;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PortfolioController"/> class.
+        /// </summary>
+        /// <param name="dataService">The data service.</param>
+        /// <param name="configuration">The configuration.</param>
         public PortfolioController(IDataService dataService, IConfiguration configuration)
         {
             this.DataService = dataService;
@@ -17,9 +34,9 @@
         }
 
         /// <summary>
-        /// GetPortfolio : It returns list of positionVM, which contains list of mandates if instrumentcode & code matches between fundofmande and position. 
+        /// Gets the portfolio.
         /// </summary>
-        /// <returns> PortfolioVM : list of PositionVM</returns>
+        /// <returns></returns>
         [HttpGet]
         public PortfolioVM GetPortfolio()
         {

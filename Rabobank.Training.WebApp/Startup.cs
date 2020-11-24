@@ -27,6 +27,7 @@ namespace Rabobank.Training.WebApp
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            //Dataservice DI
             services.AddScoped<IDataService, DataService>();
         }
 

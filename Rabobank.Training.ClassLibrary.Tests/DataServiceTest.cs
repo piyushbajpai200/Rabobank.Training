@@ -6,23 +6,42 @@ namespace Rabobank.Training.ClassLibrary.Tests
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// DataService unit test
+    /// </summary>
     [TestClass]
     public class DataServiceTest
     {
+        /// <summary>
+        /// The dataservice
+        /// </summary>
         private IDataService dataservice;
+
+        /// <summary>
+        /// The path
+        /// </summary>
         private string path;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataServiceTest"/> class.
+        /// </summary>
         public DataServiceTest()
         {
             dataservice = new DataService();
         }
 
+        /// <summary>
+        /// Sets the path.
+        /// </summary>
         [TestInitialize]
         public void SetPath()
         {
             path = @"..\..\..\TestData\FundsOfMandatesData.xml";
         }
 
+        /// <summary>
+        /// Gets the fund of mandates should return funds of mandates data when XML has data.
+        /// </summary>
         [TestMethod]
         public void GetFundOfMandates_ShouldReturnFundsOfMandatesDataWhenXMLHasData()
         {
@@ -33,6 +52,9 @@ namespace Rabobank.Training.ClassLibrary.Tests
             Assert.IsNotNull(fundsOfMandatesData);
         }
 
+        /// <summary>
+        /// Gets the portfolio should return position vm.
+        /// </summary>
         [TestMethod]
         public void GetPortfolio_ShouldReturnPositionVM()
         {
@@ -43,12 +65,15 @@ namespace Rabobank.Training.ClassLibrary.Tests
             Assert.IsNotNull(PortfolioVM);
         }
 
+        /// <summary>
+        /// Gets the portfolio should match position count.
+        /// </summary>
         [TestMethod]
         public void GetPortfolio_ShouldMatchPositionCount()
         {
             //Arrange
             int positionsCount = 5;
-           
+
             //Act
             PortfolioVM actualPortfolio = dataservice.GetPortfolio(path);
 
@@ -56,6 +81,9 @@ namespace Rabobank.Training.ClassLibrary.Tests
             Assert.AreEqual(positionsCount, actualPortfolio.Positions.Count);
         }
 
+        /// <summary>
+        /// Calculates the mandate should not return mandate when instrument code does not match.
+        /// </summary>
         [TestMethod]
         public void CalculateMandate_ShouldNotReturnMandate_WhenInstrumentCodeDoesNotMatch()
         {
@@ -72,6 +100,9 @@ namespace Rabobank.Training.ClassLibrary.Tests
             Assert.AreEqual(result.Count, expectedCount);
         }
 
+        /// <summary>
+        /// Calculates the mandate should return mandate when instrument code matches.
+        /// </summary>
         [TestMethod]
         public void CalculateMandate_ShouldReturnMandate_WhenInstrumentCodeMatches()
         {
@@ -88,6 +119,9 @@ namespace Rabobank.Training.ClassLibrary.Tests
             Assert.AreEqual(result.Count, expectedCount);
         }
 
+        /// <summary>
+        /// Calculates the mandate should match mandate value when instrument code matches.
+        /// </summary>
         [TestMethod]
         public void CalculateMandate_ShouldMatchMandateValue_WhenInstrumentCodeMatches()
         {
@@ -113,6 +147,9 @@ namespace Rabobank.Training.ClassLibrary.Tests
             }
         }
 
+        /// <summary>
+        /// Fills the mandate should not add mandate for empty funds of mandate data when funds of mandate is empty.
+        /// </summary>
         [TestMethod]
         public void FillMandate_ShouldNotAddMandateForEmptyFundsOfMandateData_WhenFundsOfMandateIsEmpty()
         {
@@ -135,6 +172,9 @@ namespace Rabobank.Training.ClassLibrary.Tests
             }
         }
 
+        /// <summary>
+        /// Fills the mandate should add mandate when instrument code matches.
+        /// </summary>
         [TestMethod]
         public void FillMandate_ShouldAddMandate_WhenInstrumentCodeMatches()
         {
