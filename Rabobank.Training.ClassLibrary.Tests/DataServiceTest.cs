@@ -131,10 +131,10 @@ namespace Rabobank.Training.ClassLibrary.Tests
             string positioncode = "NL0000287100";
             decimal positionValue = 23456;
             List<MandateVM> expectedMandateVM = new List<MandateVM>()
-                                               { new MandateVM() { Name = "Robeco Factor Momentum Mandaat", Allocation = (decimal)35.5, Value = 8327 },
-                                                 new MandateVM() { Name = "BNPP Factor Value Mandaat", Allocation = (decimal)38.3, Value = 8984 },
-                                                 new MandateVM() { Name = "Robeco Factor Quality Mandaat", Allocation = (decimal)26.1, Value = 6122 },
-                                                 new MandateVM() { Name = "Liquidity", Allocation = (decimal)0.1, Value = 23 },
+                                               { new MandateVM() { Name = "Robeco Factor Momentum Mandaat", Allocation = (decimal)0.355, Value = 8327 },
+                                                 new MandateVM() { Name = "BNPP Factor Value Mandaat", Allocation = (decimal)0.383, Value = 8984 },
+                                                 new MandateVM() { Name = "Robeco Factor Quality Mandaat", Allocation = (decimal)0.261, Value = 6122 },
+                                                 new MandateVM() { Name = "Liquidity", Allocation = (decimal)0.001, Value = 23 },
                                                 };
             //Act
             List<MandateVM> actualMandateVM = dataservice.CalculateMandate(positioncode, positionValue, fundsOfMandatesData);
@@ -190,6 +190,31 @@ namespace Rabobank.Training.ClassLibrary.Tests
 
             //Assert
             actualMandateCount.Should().Be(expectedMandateCount);
+        }
+
+        /// <summary>
+        /// Fills the mandate should add mandate when instrument code matches.
+        /// </summary>
+        [TestMethod]
+        public void FillMandate_ShouldMatchMandates_WhenInstrumentCodeMatches()
+        {
+            //Arrange
+            PortfolioVM portfolioVM = new PortfolioVM();
+            portfolioVM.Positions.Add(new PositionVM() { Code = "NL0000287100", Name = "Optimix Mix Fund", Value = 23456 });
+            List<MandateVM> expectedListOfMandates = new List<MandateVM>()
+                                               { new MandateVM() { Name = "Robeco Factor Momentum Mandaat", Allocation = (decimal)0.355, Value = 8327 },
+                                                 new MandateVM() { Name = "BNPP Factor Value Mandaat", Allocation = (decimal)0.383, Value = 8984 },
+                                                 new MandateVM() { Name = "Robeco Factor Quality Mandaat", Allocation = (decimal)0.261, Value = 6122 },
+                                                 new MandateVM() { Name = "Liquidity", Allocation = (decimal)0.001, Value = 23 },
+                                                };
+            FundsOfMandatesData fundsOfMandatesData = dataservice.GetFundOfMandates(path);
+
+            //Act
+            List<MandateVM> actualListOfMandates = dataservice.FillMandate(portfolioVM, fundsOfMandatesData).Positions[0].Mandates;
+            MandateVM actualMandateVM = actualListOfMandates.Where(x=>x.Name == "Robeco Factor Momentum Mandaat").FirstOrDefault();
+            //Assert
+            actualListOfMandates.Should().BeEquivalentTo(expectedListOfMandates);
+            actualMandateVM.Should().BeEquivalentTo(new MandateVM() { Name = "Robeco Factor Momentum Mandaat", Allocation = (decimal)0.355, Value = 8327 });
         }
     }
 }
