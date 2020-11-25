@@ -5,6 +5,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
     using Rabobank.Training.ClassLibrary;
     using System.Collections.Generic;
     using System.Linq;
+    using FluentAssertions;
 
     /// <summary>
     /// DataService unit test
@@ -49,7 +50,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
             FundsOfMandatesData fundsOfMandatesData = dataservice.GetFundOfMandates(path);
 
             //Assert
-            Assert.IsNotNull(fundsOfMandatesData);
+            fundsOfMandatesData.Should().NotBeNull();
         }
 
         /// <summary>
@@ -59,10 +60,10 @@ namespace Rabobank.Training.ClassLibrary.Tests
         public void GetPortfolio_ShouldReturnPositionVM()
         {
             //Act
-            PortfolioVM PortfolioVM = dataservice.GetPortfolio(path);
+            PortfolioVM portfolioVM = dataservice.GetPortfolio(path);
 
             //Assert
-            Assert.IsNotNull(PortfolioVM);
+            portfolioVM.Should().NotBeNull();
         }
 
         /// <summary>
@@ -75,10 +76,10 @@ namespace Rabobank.Training.ClassLibrary.Tests
             int positionsCount = 5;
 
             //Act
-            PortfolioVM actualPortfolio = dataservice.GetPortfolio(path);
+            int actualPostionsCount = dataservice.GetPortfolio(path).Positions.Count;
 
             //Assert
-            Assert.AreEqual(positionsCount, actualPortfolio.Positions.Count);
+            actualPostionsCount.Should().Be(positionsCount);
         }
 
         /// <summary>
@@ -94,10 +95,10 @@ namespace Rabobank.Training.ClassLibrary.Tests
             int expectedCount = 0;
 
             //Act
-            List<MandateVM> result = dataservice.CalculateMandate(positioncode, positionValue, fundsOfMandatesData);
+            int actualMandateCount = dataservice.CalculateMandate(positioncode, positionValue, fundsOfMandatesData).Count;
 
             //Assert
-            Assert.AreEqual(result.Count, expectedCount);
+            actualMandateCount.Should().Be(expectedCount);
         }
 
         /// <summary>
@@ -113,10 +114,10 @@ namespace Rabobank.Training.ClassLibrary.Tests
             int expectedCount = 4;
 
             //Act
-            List<MandateVM> result = dataservice.CalculateMandate(positioncode, positionValue, fundsOfMandatesData);
+            int actualMandateCount = dataservice.CalculateMandate(positioncode, positionValue, fundsOfMandatesData).Count;
 
             //Assert
-            Assert.AreEqual(result.Count, expectedCount);
+            actualMandateCount.Should().Be(expectedCount);
         }
 
         /// <summary>
@@ -139,11 +140,11 @@ namespace Rabobank.Training.ClassLibrary.Tests
             List<MandateVM> actualMandateVM = dataservice.CalculateMandate(positioncode, positionValue, fundsOfMandatesData);
 
             //Assert
-            Assert.IsNotNull(actualMandateVM);
-            Assert.IsTrue(expectedMandateVM.Count == actualMandateVM.Count);
+            actualMandateVM.Should().NotBeNull();
+            expectedMandateVM.Count.Should().Be(actualMandateVM.Count);
             foreach (var mandate in actualMandateVM)
             {
-                Assert.AreEqual(expectedMandateVM.Where(x => x.Name == mandate.Name).Select(x => x.Value).FirstOrDefault(), mandate.Value);
+                expectedMandateVM.Where(x => x.Name == mandate.Name).Select(x => x.Value).FirstOrDefault().Should().Be(mandate.Value);
             }
         }
 
@@ -168,7 +169,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
             //Assert
             foreach (var position in portfolioVM.Positions)
             {
-                Assert.AreEqual(position.Mandates.Count, 0);
+                position.Mandates.Count.Should().Be(0);
             }
         }
 
@@ -185,10 +186,10 @@ namespace Rabobank.Training.ClassLibrary.Tests
             int expectedMandateCount = 4;
 
             //Act
-            portfolioVM = dataservice.FillMandate(portfolioVM, fundsOfMandatesData);
+            int actualMandateCount = dataservice.FillMandate(portfolioVM, fundsOfMandatesData).Positions[0].Mandates.Count;
 
             //Assert
-            Assert.AreEqual(portfolioVM.Positions[0].Mandates.Count, expectedMandateCount);
+            actualMandateCount.Should().Be(expectedMandateCount);
         }
     }
 }

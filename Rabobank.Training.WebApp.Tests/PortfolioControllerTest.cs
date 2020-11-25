@@ -5,10 +5,17 @@ namespace Rabobank.Training.WebApp.Tests
     using Moq;
     using Rabobank.Training.ClassLibrary;
     using Rabobank.Training.WebApp.Controllers;
+    using FluentAssertions;
 
+    /// <summary>
+    /// Class used to test PortfolioController.
+    /// </summary>
     [TestClass]
     public class PortfolioControllerTest
     {
+        /// <summary>
+        /// Test GetPortfolio : should return portfoliovm.
+        /// </summary>
         [TestMethod]
         public void GetPortfolio_ShouldReturnPortfolio()
         {
@@ -22,10 +29,10 @@ namespace Rabobank.Training.WebApp.Tests
             var PortfolioController = new PortfolioController(dataServiceMock.Object, configurationMock.Object);
 
             //Act
-            var result = PortfolioController.GetPortfolio();
+            var expectedPortfolioVM = PortfolioController.GetPortfolio();
 
             //Assert
-            Assert.AreEqual(portfolioVM, result);
+            expectedPortfolioVM.Should().Be(portfolioVM);
         }
     }
 }
