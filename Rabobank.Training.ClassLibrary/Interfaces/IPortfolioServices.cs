@@ -3,9 +3,9 @@
     using System.Collections.Generic;
 
     /// <summary>
-    ///  Interface for loose coupling dataservice.
+    ///  Interface for loose coupling portfolioServices.
     /// </summary>
-    public interface IDataService
+    public interface IPortfolioServices
     {
         /// <summary>
         /// Gets the fund of mandates.

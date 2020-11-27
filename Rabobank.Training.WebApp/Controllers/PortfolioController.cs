@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Rabobank.Training.ClassLibrary;
+    using System;
 
     /// <summary>
     /// Portfolio api controller 
@@ -15,7 +16,7 @@
         /// <summary>
         /// The data service
         /// </summary>
-        private IDataService DataService;
+        private IPortfolioServices PortfolioServices;
 
         /// <summary>
         /// The configuration
@@ -25,11 +26,11 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="PortfolioController"/> class.
         /// </summary>
-        /// <param name="dataService">The data service.</param>
+        /// <param name="portfolioServices">The data service.</param>
         /// <param name="configuration">The configuration.</param>
-        public PortfolioController(IDataService dataService, IConfiguration configuration)
+        public PortfolioController(IPortfolioServices portfolioServices, IConfiguration configuration)
         {
-            this.DataService = dataService;
+            this.PortfolioServices = portfolioServices;
             this.Configuration = configuration;
         }
 
@@ -38,10 +39,18 @@
         /// </summary>
         /// <returns>returns portfolio view model</returns>
         [HttpGet]
-        public PortfolioVM GetPortfolio()
+        public IActionResult GetPortfolio()
         {
-            string path = Configuration.GetValue<string>("FilePath");
-            return this.DataService.GetPortfolio(path);
+            try
+            {
+                string path = Configuration.GetValue<string>("FilePath");
+                return Ok(this.PortfolioServices.GetPortfolio(path));
+            }
+            catch
+            {
+                throw new Exception("something went wrong, please try after sometime");
+            }
+            
         }
     }
 }

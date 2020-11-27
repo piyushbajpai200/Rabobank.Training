@@ -12,7 +12,6 @@ export class ShowPortfolioComponent {
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private showPortfolioService: ShowPortfolioService) {
     showPortfolioService.getPortfolio().subscribe(result => {
       this.portfolioVM = result;
-      console.log(this.portfolioVM);
     }, error => console.error(error));
   }
 }

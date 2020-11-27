@@ -8,8 +8,8 @@
     /// <summary>
     /// This class used to access data.
     /// </summary>
-    /// <seealso cref="Rabobank.Training.ClassLibrary.IDataService" />
-    public class DataService : IDataService
+    /// <seealso cref="Rabobank.Training.ClassLibrary.IPortfolioServices" />
+    public class PortfolioServices : IPortfolioServices
     {
         /// <summary>
         /// This Method accepts xml file path and serialize data into  FundsOfMandatesData

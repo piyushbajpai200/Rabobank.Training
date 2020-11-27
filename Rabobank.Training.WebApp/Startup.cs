@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Rabobank.Training.ClassLibrary;
 
 namespace Rabobank.Training.WebApp
@@ -27,12 +30,12 @@ namespace Rabobank.Training.WebApp
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-            //Dataservice DI
-            services.AddScoped<IDataService, DataService>();
+            //portfolioServices DI
+            services.AddScoped<IPortfolioServices, PortfolioServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -42,6 +45,20 @@ namespace Rabobank.Training.WebApp
             {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseExceptionHandler(app =>
+                {
+                    app.Run(async context =>
+                    {
+                        var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
+                        if (exceptionHandlerFeature != null)
+                        {
+                            var logger = loggerFactory.CreateLogger("Global Exception Logger");
+                            logger.LogError(500, exceptionHandlerFeature.Error, exceptionHandlerFeature.Error.Message);
+                        }
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("An Unexpected fault happened. Try again later.");
+                    });
+                });
                 app.UseHsts();
             }
 

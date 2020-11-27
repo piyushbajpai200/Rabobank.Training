@@ -8,15 +8,15 @@ namespace Rabobank.Training.ClassLibrary.Tests
     using FluentAssertions;
 
     /// <summary>
-    /// DataService unit test
+    /// portfolioServices unit test
     /// </summary>
     [TestClass]
-    public class DataServiceTest
+    public class PortfolioServicesTest
     {
         /// <summary>
-        /// The dataservice
+        /// The portfolioServices
         /// </summary>
-        private IDataService dataservice;
+        private IPortfolioServices portfolioServices;
 
         /// <summary>
         /// The path
@@ -24,11 +24,11 @@ namespace Rabobank.Training.ClassLibrary.Tests
         private string path;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataServiceTest"/> class.
+        /// Initializes a new instance of the <see cref="PortfolioServicesTest"/> class.
         /// </summary>
-        public DataServiceTest()
+        public PortfolioServicesTest()
         {
-            dataservice = new DataService();
+            portfolioServices = new PortfolioServices();
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
         public void GetFundOfMandates_ShouldReturnFundsOfMandatesDataWhenXMLHasData()
         {
             //Act
-            FundsOfMandatesData fundsOfMandatesData = dataservice.GetFundOfMandates(path);
+            FundsOfMandatesData fundsOfMandatesData = portfolioServices.GetFundOfMandates(path);
 
             //Assert
             fundsOfMandatesData.Should().NotBeNull();
@@ -60,7 +60,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
         public void GetPortfolio_ShouldReturnPositionVM()
         {
             //Act
-            PortfolioVM portfolioVM = dataservice.GetPortfolio(path);
+            PortfolioVM portfolioVM = portfolioServices.GetPortfolio(path);
 
             //Assert
             portfolioVM.Should().NotBeNull();
@@ -76,7 +76,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
             int positionsCount = 5;
 
             //Act
-            int actualPostionsCount = dataservice.GetPortfolio(path).Positions.Count;
+            int actualPostionsCount = portfolioServices.GetPortfolio(path).Positions.Count;
 
             //Assert
             actualPostionsCount.Should().Be(positionsCount);
@@ -89,13 +89,13 @@ namespace Rabobank.Training.ClassLibrary.Tests
         public void CalculateMandate_ShouldNotReturnMandate_WhenInstrumentCodeDoesNotMatch()
         {
             //Arrange
-            FundsOfMandatesData fundsOfMandatesData = dataservice.GetFundOfMandates(path);
+            FundsOfMandatesData fundsOfMandatesData = portfolioServices.GetFundOfMandates(path);
             string positioncode = "NL0000009165";
             decimal positionValue = 12345;
             int expectedCount = 0;
 
             //Act
-            int actualMandateCount = dataservice.CalculateMandate(positioncode, positionValue, fundsOfMandatesData).Count;
+            int actualMandateCount = portfolioServices.CalculateMandate(positioncode, positionValue, fundsOfMandatesData).Count;
 
             //Assert
             actualMandateCount.Should().Be(expectedCount);
@@ -108,13 +108,13 @@ namespace Rabobank.Training.ClassLibrary.Tests
         public void CalculateMandate_ShouldReturnMandate_WhenInstrumentCodeMatches()
         {
             //Arrange
-            FundsOfMandatesData fundsOfMandatesData = dataservice.GetFundOfMandates(path);
+            FundsOfMandatesData fundsOfMandatesData = portfolioServices.GetFundOfMandates(path);
             string positioncode = "NL0000287100";
             decimal positionValue = 23456;
             int expectedCount = 4;
 
             //Act
-            int actualMandateCount = dataservice.CalculateMandate(positioncode, positionValue, fundsOfMandatesData).Count;
+            int actualMandateCount = portfolioServices.CalculateMandate(positioncode, positionValue, fundsOfMandatesData).Count;
 
             //Assert
             actualMandateCount.Should().Be(expectedCount);
@@ -127,7 +127,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
         public void CalculateMandate_ShouldMatchMandateValue_WhenInstrumentCodeMatches()
         {
             //Arrange
-            FundsOfMandatesData fundsOfMandatesData = dataservice.GetFundOfMandates(path);
+            FundsOfMandatesData fundsOfMandatesData = portfolioServices.GetFundOfMandates(path);
             string positioncode = "NL0000287100";
             decimal positionValue = 23456;
             List<MandateVM> expectedMandateVM = new List<MandateVM>()
@@ -137,7 +137,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
                                                  new MandateVM() { Name = "Liquidity", Allocation = (decimal)0.001, Value = 23 },
                                                 };
             //Act
-            List<MandateVM> actualMandateVM = dataservice.CalculateMandate(positioncode, positionValue, fundsOfMandatesData);
+            List<MandateVM> actualMandateVM = portfolioServices.CalculateMandate(positioncode, positionValue, fundsOfMandatesData);
 
             //Assert
             actualMandateVM.Should().NotBeNull();
@@ -164,7 +164,7 @@ namespace Rabobank.Training.ClassLibrary.Tests
             FundsOfMandatesData fundsOfMandatesData = new FundsOfMandatesData();
 
             //Act
-            portfolioVM = dataservice.FillMandate(portfolioVM, fundsOfMandatesData);
+            portfolioVM = portfolioServices.FillMandate(portfolioVM, fundsOfMandatesData);
 
             //Assert
             foreach (var position in portfolioVM.Positions)
@@ -182,11 +182,11 @@ namespace Rabobank.Training.ClassLibrary.Tests
             //Arrange
             PortfolioVM portfolioVM = new PortfolioVM();
             portfolioVM.Positions.Add(new PositionVM() { Code = "NL0000287100", Name = "Optimix Mix Fund", Value = 23456 });
-            FundsOfMandatesData fundsOfMandatesData = dataservice.GetFundOfMandates(path);
+            FundsOfMandatesData fundsOfMandatesData = portfolioServices.GetFundOfMandates(path);
             int expectedMandateCount = 4;
 
             //Act
-            int actualMandateCount = dataservice.FillMandate(portfolioVM, fundsOfMandatesData).Positions[0].Mandates.Count;
+            int actualMandateCount = portfolioServices.FillMandate(portfolioVM, fundsOfMandatesData).Positions[0].Mandates.Count;
 
             //Assert
             actualMandateCount.Should().Be(expectedMandateCount);
@@ -207,10 +207,10 @@ namespace Rabobank.Training.ClassLibrary.Tests
                                                  new MandateVM() { Name = "Robeco Factor Quality Mandaat", Allocation = (decimal)0.261, Value = 6122 },
                                                  new MandateVM() { Name = "Liquidity", Allocation = (decimal)0.001, Value = 23 },
                                                 };
-            FundsOfMandatesData fundsOfMandatesData = dataservice.GetFundOfMandates(path);
+            FundsOfMandatesData fundsOfMandatesData = portfolioServices.GetFundOfMandates(path);
 
             //Act
-            List<MandateVM> actualListOfMandates = dataservice.FillMandate(portfolioVM, fundsOfMandatesData).Positions[0].Mandates;
+            List<MandateVM> actualListOfMandates = portfolioServices.FillMandate(portfolioVM, fundsOfMandatesData).Positions[0].Mandates;
             MandateVM actualMandateVM = actualListOfMandates.Where(x=>x.Name == "Robeco Factor Momentum Mandaat").FirstOrDefault();
             //Assert
             actualListOfMandates.Should().BeEquivalentTo(expectedListOfMandates);
