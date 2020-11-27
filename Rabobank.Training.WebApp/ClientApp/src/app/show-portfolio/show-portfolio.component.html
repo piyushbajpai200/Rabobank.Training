@@ -1,7 +1,8 @@
 <h1 id="tableLabel">Portfolio</h1>
 
-<p *ngIf="!portfolioVM"><em>Loading...</em></p>
+<p *ngIf="!portfolioVM && !errorFlag"><em>Loading...</em></p>
 
+<p *ngIf="errorFlag">Something went wrong, Please try again. </p>
 <table class='table ' aria-labelledby="tableLabel" *ngIf="portfolioVM">
   <thead>
     <tr>

@@ -9,9 +9,10 @@ import { ShowPortfolioService } from '../services/show-portfolio.service';
 })
 export class ShowPortfolioComponent {
   public portfolioVM: PortfolioVM;
+  public errorFlag: Boolean = false;
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private showPortfolioService: ShowPortfolioService) {
     showPortfolioService.getPortfolio().subscribe(result => {
       this.portfolioVM = result;
-    }, error => console.error(error));
+    }, error => this.errorFlag = true);
   }
 }
