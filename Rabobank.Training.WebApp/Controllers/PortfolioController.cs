@@ -14,7 +14,7 @@
     public class PortfolioController : ControllerBase
     {
         /// <summary>
-        /// The data service
+        /// The portfolio service
         /// </summary>
         private IPortfolioServices PortfolioServices;
 
@@ -26,7 +26,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="PortfolioController"/> class.
         /// </summary>
-        /// <param name="portfolioServices">The data service.</param>
+        /// <param name="portfolioServices">The portfolio service.</param>
         /// <param name="configuration">The configuration.</param>
         public PortfolioController(IPortfolioServices portfolioServices, IConfiguration configuration)
         {
